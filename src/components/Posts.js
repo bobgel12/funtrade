@@ -12,7 +12,7 @@ class Posts extends Component{
         }
     }
     render(){
-        let data = this.props.posts.data;
+        let {data} = this.props.posts;
         return(
             <div className="container">
                 <div className="row">
@@ -23,8 +23,8 @@ class Posts extends Component{
                 }
                 {
                     this.props.hasReceivedData ?
-                        this.props.posts.data ?
-                            this.props.posts.data.map((post)=>{
+                        data ?
+                            data.map((post)=>{
                                 return <Item post={post} uid = {this.props.auth.uid} key = {post.date}/>
                             })
                         :

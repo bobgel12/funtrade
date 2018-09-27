@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import store from './store';
 import { listenToAuth } from './actions/auth';
-import { listenToPosts, listenToWishList } from './actions/posts';
+import { listenToPosts } from './actions/posts';
 import { Route, Switch } from "react-router-dom";
 import Posts from './components/Posts';
 import NavBar from './components/NavBar';

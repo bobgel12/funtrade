@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { submitPost, deletePost, listenToWishList } from '../actions/posts';
+import { loginWithGoogle, logoutUser, loginWithFaceBook } from '../actions/auth';
+import { search, filter } from '../actions/filter';
+// import C from '../constants';
+
 
 class NavBar extends Component {
-
+    constructor(props){
+        super(props)
+        
+    }
     render() {
+        let { auth } = this.props;
+        console.log(auth)
         return (
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="#">FunTrade</a>
@@ -20,7 +28,21 @@ class NavBar extends Component {
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search"/>
                     </form>
-                    <a style={{marginLeft: "2px"}} class="btn btn-outline-primary" href="#">Sign up</a>
+                    {
+                        auth.uid ?
+                            <button onClick={this.props.logoutUser} style={{marginLeft: "2px"}} class="btn btn-outline-primary">Sign out</button>
+                        :
+                            <div class="dropdown">
+                                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Log in
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="Login">
+                                    <button onClick={this.props.loginWithGoogle} class="dropdown-item" href="#">Google</button>
+                                    <button onClick={this.props.loginWithFaceBook} class="dropdown-item" href="#">Facebook</button>
+                                    <button  class="dropdown-item" href="#">Username</button>
+                                </div>
+                            </div>
+                    }
                 </div>
             </nav>
         )
@@ -31,17 +53,15 @@ class NavBar extends Component {
 
 
 const mapStateToProps = (state) => {
-    return {
-        posts: state.posts,
-        auth: state.auth,
-        hasReceivedData: state.posts.hasReceivedData,
-    };
-};
+    return { auth: state.auth };
+}
 
 const mapDispatchToProps = {
-    submitPost,
-    deletePost,
-    listenToWishList,
+    loginWithGoogle,
+    logoutUser,
+    search,
+    filter,
+    loginWithFaceBook
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
